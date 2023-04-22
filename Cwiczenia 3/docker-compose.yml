@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  ray-head:
+    image: rayproject/ray
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    command: bash -c "ray start --head --dashboard-port=8000 --port=8001 --dashboard-host=0.0.0.0 --block"
+    shm_size: 2g
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2g'
+
+  ray-worker:
+    image: rayproject/ray
+    depends_on:
+      - ray-head
+    command: bash -c "ray start --address=ray-head:8001 --num-cpus=1 --block"
+    shm_size: 2g
+    deploy:
+      mode: replicated
+      replicas: 16
+      resources:
+        limits:
+          cpus: '1'
+          memory: '2g'
