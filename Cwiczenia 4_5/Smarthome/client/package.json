@@ -1,0 +1,8 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "dependencies": {
+    "ice": "^3.7.90",
+    "prompt-sync": "^4.2.0"
+  }
+}

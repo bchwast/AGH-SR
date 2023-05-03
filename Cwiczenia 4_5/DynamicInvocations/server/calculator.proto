@@ -1,0 +1,40 @@
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "gen";
+option java_outer_classname = "CalculatorServiceProto";
+
+package calculator;
+
+
+enum OperationType {
+	SUM = 0;
+  AVG = 1;
+  MULT = 2;
+  MIN = 3;
+  MAX = 4;
+}
+
+message ArithmeticOpArguments {
+  OperationType opType = 1;
+  repeated double args = 2;
+}
+
+message ArithmeticOpResult {
+  double res = 1;
+}
+
+message PrimeTesterArguments {
+  int64 number = 1;
+}
+
+message PrimeTesterResult {
+  bool isPrime = 1;
+}
+
+service CalculatorService {
+  rpc Operation (ArithmeticOpArguments) returns (ArithmeticOpResult) {}
+  rpc PrimeTester (PrimeTesterArguments) returns (PrimeTesterResult) {}
+}
+

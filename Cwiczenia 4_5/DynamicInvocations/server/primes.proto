@@ -1,0 +1,28 @@
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "gen";
+option java_outer_classname = "PrimesServiceProto";
+
+package calculator;
+
+message PrimesInput
+{
+  int64 max = 1;
+}
+
+message PrimesStreamResult
+{
+  int64 value = 1;
+}
+
+message PrimesResult
+{
+  repeated int64 primes = 1;
+}
+
+service PrimesService {
+  rpc StreamPrimeNumbers(PrimesInput) returns (stream PrimesStreamResult) {}
+  rpc ListPrimeNumbers(PrimesInput) returns (PrimesResult) {}
+}
