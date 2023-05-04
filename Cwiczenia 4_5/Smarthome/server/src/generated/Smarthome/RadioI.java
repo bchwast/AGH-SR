@@ -19,7 +19,7 @@ public interface RadioI extends SpeakerI
 {
     RadioStation getStation(com.zeroc.Ice.Current current);
 
-    void setStation(RadioStation station, com.zeroc.Ice.Current current)
+    boolean setStation(RadioStation station, com.zeroc.Ice.Current current)
         throws InvalidRadioStationException;
 
     java.util.List<RadioStation> getRadioStations(com.zeroc.Ice.Current current);
@@ -84,8 +84,11 @@ public interface RadioI extends SpeakerI
         RadioStation iceP_station;
         iceP_station = RadioStation.ice_read(istr);
         inS.endReadParams();
-        obj.setStation(iceP_station, current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.setStation(iceP_station, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /**

@@ -20,20 +20,22 @@ public class Device implements DeviceI {
     }
 
     @Override
-    public void turnOn(Current current) throws SmarthomeException {
+    public boolean turnOn(Current current) throws SmarthomeException {
         System.out.println("Device " + name + " turned on, current id: " + current.id.name + ", category: " + current.id.category);
         if (state) {
             throw new SmarthomeException("Device is already on!");
         }
         state = true;
+        return true;
     }
 
     @Override
-    public void turnOff(Current current) throws SmarthomeException {
+    public boolean turnOff(Current current) throws SmarthomeException {
         System.out.println("Device " + name + " turned off, current id: " + current.id.name + ", category: " + current.id.category);
         if (!state) {
             throw new SmarthomeException("Device is already off!");
         }
         state = false;
+        return true;
     }
 }

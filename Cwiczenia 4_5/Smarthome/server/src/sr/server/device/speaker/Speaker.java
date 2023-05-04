@@ -17,15 +17,17 @@ public class Speaker extends Device implements SpeakerI {
     }
 
     @Override
-    public void play(Current current) {
+    public boolean play(Current current) {
         System.out.println("Speaker.play called by " + current.id.name + ", category: " + current.id.category);
         isPlaying = true;
+        return true;
     }
 
     @Override
-    public void stop(Current current) {
+    public boolean stop(Current current) {
         System.out.println("Speaker.stop called by " + current.id.name + ", category: " + current.id.category);
         isPlaying = false;
+        return true;
     }
 
     @Override
@@ -35,11 +37,12 @@ public class Speaker extends Device implements SpeakerI {
     }
 
     @Override
-    public void setVolume(int volume, Current current) throws InvalidVolumeException {
+    public boolean setVolume(int volume, Current current) throws InvalidVolumeException {
         System.out.println("Speaker.setVolume(" + volume + ") called by " + current.id.name + ", category: " + current.id.category);
         if (volume < 0 || volume > 100) {
             throw new InvalidVolumeException("Volume must be between 0 and 100!");
         }
         this.volume = volume;
+        return true;
     }
 }

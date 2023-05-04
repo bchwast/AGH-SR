@@ -17,7 +17,13 @@ public class CoffeeMaker extends BeverageMaker implements CoffeeMakerI {
     }
 
     @Override
-    public void setCoffee(Coffee coffee, Current current) throws InvalidCoffeeException {
+    public Coffee getCurrentCoffee(Current current) {
+        System.out.println("CoffeeMaker.getCurrentCoffee() called by " + current.id.name + ", category: " + current.id.category);
+        return coffee;
+    }
+
+    @Override
+    public boolean setCoffee(Coffee coffee, Current current) throws InvalidCoffeeException {
         System.out.println("CoffeeMaker.setCoffee(" + coffee + ") called by " + current.id.name + ", category: " + current.id.category);
         if (coffee == null) {
             throw new InvalidCoffeeException("Coffee cannot be null");
@@ -29,6 +35,7 @@ public class CoffeeMaker extends BeverageMaker implements CoffeeMakerI {
             throw new InvalidCoffeeException("Coffee strength must be between 0 and 10");
         }
         this.coffee = coffee;
+        return true;
     }
 
     @Override

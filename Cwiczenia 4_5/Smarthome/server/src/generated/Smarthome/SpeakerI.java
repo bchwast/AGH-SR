@@ -17,13 +17,13 @@ package Smarthome;
 
 public interface SpeakerI extends DeviceI
 {
-    void play(com.zeroc.Ice.Current current);
+    boolean play(com.zeroc.Ice.Current current);
 
-    void stop(com.zeroc.Ice.Current current);
+    boolean stop(com.zeroc.Ice.Current current);
 
     int getVolume(com.zeroc.Ice.Current current);
 
-    void setVolume(int volume, com.zeroc.Ice.Current current)
+    boolean setVolume(int volume, com.zeroc.Ice.Current current)
         throws InvalidVolumeException;
 
     /** @hidden */
@@ -62,8 +62,11 @@ public interface SpeakerI extends DeviceI
     {
         com.zeroc.Ice.Object._iceCheckMode(com.zeroc.Ice.OperationMode.Idempotent, current.mode);
         inS.readEmptyParams();
-        obj.play(current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.play(current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /**
@@ -77,8 +80,11 @@ public interface SpeakerI extends DeviceI
     {
         com.zeroc.Ice.Object._iceCheckMode(com.zeroc.Ice.OperationMode.Idempotent, current.mode);
         inS.readEmptyParams();
-        obj.stop(current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.stop(current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /**
@@ -115,8 +121,11 @@ public interface SpeakerI extends DeviceI
         int iceP_volume;
         iceP_volume = istr.readInt();
         inS.endReadParams();
-        obj.setVolume(iceP_volume, current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.setVolume(iceP_volume, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /** @hidden */

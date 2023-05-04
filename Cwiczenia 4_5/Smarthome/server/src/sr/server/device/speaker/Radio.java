@@ -25,12 +25,13 @@ public class Radio extends Speaker implements RadioI {
     }
 
     @Override
-    public void setStation(RadioStation station, Current current) throws InvalidRadioStationException {
+    public boolean setStation(RadioStation station, Current current) throws InvalidRadioStationException {
         System.out.println("Radio.setStation(" + station + ") called by " + current.id.name + ", category: " + current.id.category);
         if (station == null) {
             throw new InvalidRadioStationException("Station cannot be null");
         }
         this.station = station;
+        return true;
     }
 
     @Override

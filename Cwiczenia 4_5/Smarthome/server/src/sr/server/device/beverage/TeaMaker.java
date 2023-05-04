@@ -17,7 +17,13 @@ public class TeaMaker extends BeverageMaker implements TeaMakerI {
     }
 
     @Override
-    public void setTea(Tea tea, Current current) throws InvalidTeaException {
+    public Tea getCurrentTea(Current current) {
+        System.out.println("TeaMaker.getCurrentTea() called by " + current.id.name + ", category: " + current.id.category);
+        return tea;
+    }
+
+    @Override
+    public boolean setTea(Tea tea, Current current) throws InvalidTeaException {
         System.out.println("TeaMaker.setTea(" + tea + ") called by " + current.id.name + ", category: " + current.id.category);
         if (tea == null) {
             throw new InvalidTeaException("Tea cannot be null");
@@ -29,6 +35,7 @@ public class TeaMaker extends BeverageMaker implements TeaMakerI {
             throw new InvalidTeaException("Tea strength must be between 0 and 10");
         }
         this.tea = tea;
+        return true;
     }
 
     @Override

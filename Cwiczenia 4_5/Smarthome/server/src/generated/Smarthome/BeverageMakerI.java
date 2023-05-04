@@ -19,7 +19,7 @@ public interface BeverageMakerI extends DeviceI
 {
     int getWaterLevel(com.zeroc.Ice.Current current);
 
-    void addWater(int amount, com.zeroc.Ice.Current current)
+    boolean addWater(int amount, com.zeroc.Ice.Current current)
         throws WaterOverflowException;
 
     /** @hidden */
@@ -81,8 +81,11 @@ public interface BeverageMakerI extends DeviceI
         int iceP_amount;
         iceP_amount = istr.readInt();
         inS.endReadParams();
-        obj.addWater(iceP_amount, current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.addWater(iceP_amount, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /** @hidden */

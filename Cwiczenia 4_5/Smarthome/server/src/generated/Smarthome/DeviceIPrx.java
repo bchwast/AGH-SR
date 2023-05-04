@@ -54,18 +54,18 @@ public interface DeviceIPrx extends com.zeroc.Ice.ObjectPrx
         return f;
     }
 
-    default void turnOn()
+    default boolean turnOn()
         throws SmarthomeException
     {
-        turnOn(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return turnOn(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void turnOn(java.util.Map<String, String> context)
+    default boolean turnOn(java.util.Map<String, String> context)
         throws SmarthomeException
     {
         try
         {
-            _iceI_turnOnAsync(context, true).waitForResponseOrUserEx();
+            return _iceI_turnOnAsync(context, true).waitForResponseOrUserEx();
         }
         catch(SmarthomeException ex)
         {
@@ -77,12 +77,12 @@ public interface DeviceIPrx extends com.zeroc.Ice.ObjectPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> turnOnAsync()
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> turnOnAsync()
     {
         return _iceI_turnOnAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> turnOnAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> turnOnAsync(java.util.Map<String, String> context)
     {
         return _iceI_turnOnAsync(context, false);
     }
@@ -93,10 +93,14 @@ public interface DeviceIPrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_turnOnAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_turnOnAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "turnOn", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_turnOn);
-        f.invoke(true, context, null, null, null);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "turnOn", null, sync, _iceE_turnOn);
+        f.invoke(true, context, null, null, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 
@@ -106,18 +110,18 @@ public interface DeviceIPrx extends com.zeroc.Ice.ObjectPrx
         SmarthomeException.class
     };
 
-    default void turnOff()
+    default boolean turnOff()
         throws SmarthomeException
     {
-        turnOff(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return turnOff(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void turnOff(java.util.Map<String, String> context)
+    default boolean turnOff(java.util.Map<String, String> context)
         throws SmarthomeException
     {
         try
         {
-            _iceI_turnOffAsync(context, true).waitForResponseOrUserEx();
+            return _iceI_turnOffAsync(context, true).waitForResponseOrUserEx();
         }
         catch(SmarthomeException ex)
         {
@@ -129,12 +133,12 @@ public interface DeviceIPrx extends com.zeroc.Ice.ObjectPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> turnOffAsync()
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> turnOffAsync()
     {
         return _iceI_turnOffAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> turnOffAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> turnOffAsync(java.util.Map<String, String> context)
     {
         return _iceI_turnOffAsync(context, false);
     }
@@ -145,10 +149,14 @@ public interface DeviceIPrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_turnOffAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_turnOffAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "turnOff", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_turnOff);
-        f.invoke(true, context, null, null, null);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "turnOff", null, sync, _iceE_turnOff);
+        f.invoke(true, context, null, null, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

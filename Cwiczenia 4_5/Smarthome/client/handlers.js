@@ -47,10 +47,10 @@ const handleCommonDeviceCommands = async (command, stub) => {
             console.log(await stub.getState())
             return true
         case 'turnOn':
-            await stub.turnOn()
+            console.log(await stub.turnOn())
             return true
         case 'turnOff':
-            await stub.turnOff()
+            console.log(await stub.turnOff())
             return true
     }
     return false
@@ -77,7 +77,7 @@ const handleBeverageMakerCommands = async (command, stub) => {
             return true
         case 'addWater':
             const amount = prompt('Amount: ')
-            await stub.addWater(amount)
+            console.log(await stub.addWater(amount))
             return true
     }
     return false
@@ -86,17 +86,17 @@ const handleBeverageMakerCommands = async (command, stub) => {
 const handleSpeakerCommands = async (command, stub) => {
     switch (command) {
         case 'play':
-            await stub.play()
+            console.log(await stub.play())
             return true
         case 'stop':
-            await stub.stop()
+            console.log(await stub.stop())
             return true
         case 'getVolume':
             console.log(await stub.getVolume())
             return true
         case 'setVolume':
             const volume = prompt('Volume: ')
-            await stub.setVolume(volume)
+            console.log(await stub.setVolume(volume))
             return true
     }
 }
@@ -119,12 +119,15 @@ const bulbulatorHandler = async (name, communicator) => {
 
 const coffeeMakerHandler = async (name, communicator) => {
     const stub = await getStub(name, communicator)
-    const command = prompt('Commands: getState, turnOn, turnOff, getWaterLevel, addWater, setCoffee, makeCoffee, getCoffeeTypes): ')
+    const command = prompt('Commands: getState, turnOn, turnOff, getWaterLevel, addWater, getCurrentCoffee, setCoffee, makeCoffee, getCoffeeTypes): ')
 
     if (await handleCommonDeviceCommands(command, stub)) return
     if (await handleBeverageMakerCommands(command, stub)) return
 
     switch (command) {
+        case 'getCurrentCoffee':
+            console.log(await stub.getCurrentCoffee())
+            break
         case 'setCoffee':
             const type = Smarthome.CoffeeType[prompt('Type: ')]
             if (!Smarthome.CoffeeType[type]) {
@@ -132,10 +135,10 @@ const coffeeMakerHandler = async (name, communicator) => {
                 return
             }
             const strength = parseInt(prompt('Strength: '))
-            await stub.setCoffee(new Smarthome.Coffee(type, strength))
+            console.log(await stub.setCoffee(new Smarthome.Coffee(type, strength)))
             break
         case 'makeCoffee':
-            await stub.makeCoffee()
+            console.log(await stub.makeCoffee())
             break
         case 'getCoffeeTypes':
             console.log(await stub.getCoffeeTypes())
@@ -159,7 +162,7 @@ const musicPlayerHandler = async (name, communicator) => {
         case 'setSong':
             const artist = prompt('Artist: ')
             const title = prompt('Title: ')
-            await stub.setSong(new Smarthome.Song(artist, title))
+            console.log(await stub.setSong(new Smarthome.Song(artist, title)))
             break
         default:
             console.log('Unknown command')
@@ -199,7 +202,7 @@ const radioHandler = async (name, communicator) => {
                 console.log('Unknown station')
                 break
             }
-            await stub.setStation(Smarthome.RadioStation[station])
+            console.log(await stub.setStation(Smarthome.RadioStation[station]))
             break
         case 'getRadioStations':
             console.log(await stub.getRadioStations())
@@ -211,12 +214,15 @@ const radioHandler = async (name, communicator) => {
 
 const teaMakerHandler = async (name, communicator) => {
     const stub = await getStub(name, communicator)
-    const command = prompt('Commands: getState, turnOn, turnOff, getWaterLevel, addWater, setTea, makeTea, getTeaTypes: ')
+    const command = prompt('Commands: getState, turnOn, turnOff, getWaterLevel, addWater, getCurrenTea, setTea, makeTea, getTeaTypes: ')
 
     if (await handleCommonDeviceCommands(command, stub)) return
     if (await handleBeverageMakerCommands(command, stub)) return
 
     switch (command) {
+        case 'getCurrentTea':
+            console.log(await stub.getCurrentTea())
+            break
         case 'setTea':
             const type = Smarthome.TeaType[prompt('Type: ')]
             if (!Smarthome.TeaType[type]) {
@@ -224,10 +230,10 @@ const teaMakerHandler = async (name, communicator) => {
                 break
             }
             const strength = parseInt(prompt('Strength: '))
-            await stub.setTea(new Smarthome.Tea(type, strength))
+            console.log(await stub.setTea(new Smarthome.Tea(type, strength)))
             break
         case 'makeTea':
-            await stub.makeTea()
+            console.log(await stub.makeTea())
             break
         case 'getTeaTypes':
             console.log(await stub.getTeaTypes())

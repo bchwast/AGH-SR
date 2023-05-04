@@ -6,18 +6,18 @@ module Smarthome {
 
     interface DeviceI {
         idempotent bool getState();
-        idempotent void turnOn() throws SmarthomeException;
-        idempotent void turnOff() throws SmarthomeException;
+        bool turnOn() throws SmarthomeException;
+        bool turnOff() throws SmarthomeException;
     };
 
 
     exception InvalidVolumeException extends SmarthomeException {};
 
     interface SpeakerI extends DeviceI {
-        idempotent void play();
-        idempotent void stop();
+        idempotent bool play();
+        idempotent bool stop();
         idempotent int getVolume();
-        idempotent void setVolume(int volume) throws InvalidVolumeException;
+        idempotent bool setVolume(int volume) throws InvalidVolumeException;
     };
 
     enum RadioStation {
@@ -34,7 +34,7 @@ module Smarthome {
 
     interface RadioI extends SpeakerI {
         idempotent RadioStation getStation();
-        idempotent void setStation(RadioStation station) throws InvalidRadioStationException;
+        idempotent bool setStation(RadioStation station) throws InvalidRadioStationException;
         idempotent radioStations getRadioStations();
     };
 
@@ -46,7 +46,7 @@ module Smarthome {
 
     interface MusicPlayerI extends SpeakerI {
         idempotent Song getSong();
-        idempotent void setSong(Song song) throws InvalidSongException;
+        idempotent bool setSong(Song song) throws InvalidSongException;
     };
 
 
@@ -69,7 +69,7 @@ module Smarthome {
 
     interface BeverageMakerI extends DeviceI {
         idempotent int getWaterLevel();
-        void addWater(int amount) throws WaterOverflowException;
+        bool addWater(int amount) throws WaterOverflowException;
     };
 
     enum CoffeeType {
@@ -88,7 +88,8 @@ module Smarthome {
     sequence <CoffeeType> coffeeTypes;
 
     interface CoffeeMakerI extends BeverageMakerI {
-        idempotent void setCoffee(Coffee coffee) throws InvalidCoffeeException;
+        idempotent Coffee getCurrentCoffee();
+        idempotent bool setCoffee(Coffee coffee) throws InvalidCoffeeException;
         idempotent Coffee makeCoffee() throws WaterUnderflowException;
         idempotent coffeeTypes getCoffeeTypes();
     };
@@ -109,7 +110,8 @@ module Smarthome {
     sequence <TeaType> teaTypes;
 
     interface TeaMakerI extends BeverageMakerI {
-        idempotent void setTea(Tea tea) throws InvalidTeaException;
+        idempotent Tea getCurrentTea();
+        idempotent bool setTea(Tea tea) throws InvalidTeaException;
         idempotent Tea makeTea() throws WaterUnderflowException;
         idempotent teaTypes getTeaTypes();
     };

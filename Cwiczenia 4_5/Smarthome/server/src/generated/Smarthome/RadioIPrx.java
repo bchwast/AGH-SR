@@ -54,18 +54,18 @@ public interface RadioIPrx extends SpeakerIPrx
         return f;
     }
 
-    default void setStation(RadioStation station)
+    default boolean setStation(RadioStation station)
         throws InvalidRadioStationException
     {
-        setStation(station, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return setStation(station, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void setStation(RadioStation station, java.util.Map<String, String> context)
+    default boolean setStation(RadioStation station, java.util.Map<String, String> context)
         throws InvalidRadioStationException
     {
         try
         {
-            _iceI_setStationAsync(station, context, true).waitForResponseOrUserEx();
+            return _iceI_setStationAsync(station, context, true).waitForResponseOrUserEx();
         }
         catch(InvalidRadioStationException ex)
         {
@@ -77,12 +77,12 @@ public interface RadioIPrx extends SpeakerIPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setStationAsync(RadioStation station)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setStationAsync(RadioStation station)
     {
         return _iceI_setStationAsync(station, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setStationAsync(RadioStation station, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setStationAsync(RadioStation station, java.util.Map<String, String> context)
     {
         return _iceI_setStationAsync(station, context, false);
     }
@@ -94,12 +94,16 @@ public interface RadioIPrx extends SpeakerIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_setStationAsync(RadioStation iceP_station, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_setStationAsync(RadioStation iceP_station, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setStation", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setStation);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setStation", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setStation);
         f.invoke(true, context, null, ostr -> {
                      RadioStation.ice_write(ostr, iceP_station);
-                 }, null);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

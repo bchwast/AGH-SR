@@ -17,18 +17,55 @@ package Smarthome;
 
 public interface CoffeeMakerIPrx extends BeverageMakerIPrx
 {
-    default void setCoffee(Coffee coffee)
-        throws InvalidCoffeeException
+    default Coffee getCurrentCoffee()
     {
-        setCoffee(coffee, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return getCurrentCoffee(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void setCoffee(Coffee coffee, java.util.Map<String, String> context)
+    default Coffee getCurrentCoffee(java.util.Map<String, String> context)
+    {
+        return _iceI_getCurrentCoffeeAsync(context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<Coffee> getCurrentCoffeeAsync()
+    {
+        return _iceI_getCurrentCoffeeAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<Coffee> getCurrentCoffeeAsync(java.util.Map<String, String> context)
+    {
+        return _iceI_getCurrentCoffeeAsync(context, false);
+    }
+
+    /**
+     * @hidden
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<Coffee> _iceI_getCurrentCoffeeAsync(java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<Coffee> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "getCurrentCoffee", com.zeroc.Ice.OperationMode.Idempotent, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     Coffee ret;
+                     ret = Coffee.ice_read(istr);
+                     return ret;
+                 });
+        return f;
+    }
+
+    default boolean setCoffee(Coffee coffee)
+        throws InvalidCoffeeException
+    {
+        return setCoffee(coffee, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default boolean setCoffee(Coffee coffee, java.util.Map<String, String> context)
         throws InvalidCoffeeException
     {
         try
         {
-            _iceI_setCoffeeAsync(coffee, context, true).waitForResponseOrUserEx();
+            return _iceI_setCoffeeAsync(coffee, context, true).waitForResponseOrUserEx();
         }
         catch(InvalidCoffeeException ex)
         {
@@ -40,12 +77,12 @@ public interface CoffeeMakerIPrx extends BeverageMakerIPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setCoffeeAsync(Coffee coffee)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setCoffeeAsync(Coffee coffee)
     {
         return _iceI_setCoffeeAsync(coffee, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setCoffeeAsync(Coffee coffee, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setCoffeeAsync(Coffee coffee, java.util.Map<String, String> context)
     {
         return _iceI_setCoffeeAsync(coffee, context, false);
     }
@@ -57,12 +94,16 @@ public interface CoffeeMakerIPrx extends BeverageMakerIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_setCoffeeAsync(Coffee iceP_coffee, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_setCoffeeAsync(Coffee iceP_coffee, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setCoffee", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setCoffee);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setCoffee", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setCoffee);
         f.invoke(true, context, null, ostr -> {
                      Coffee.ice_write(ostr, iceP_coffee);
-                 }, null);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

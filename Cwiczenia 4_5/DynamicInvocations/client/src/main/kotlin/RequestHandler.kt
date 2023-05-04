@@ -34,8 +34,8 @@ class RequestHandler(private val server: String) {
         return proc.inputStream.bufferedReader().readText()
     }
 
-    fun getPrimeTesterResult(number: Long): String {
-        val args = "{\\\"number\\\": $number}"
+    fun getPrimeTesterResult(number: Long?): String {
+        val args = if (number != null) "{\\\"number\\\": $number}" else "{}"
         val proc = ProcessBuilder(curl, plainText, "-d", args, server, "calculator.CalculatorService/PrimeTester")
             .redirectOutput(ProcessBuilder.Redirect.PIPE)
             .redirectError(ProcessBuilder.Redirect.INHERIT)
@@ -45,8 +45,8 @@ class RequestHandler(private val server: String) {
         return proc.inputStream.bufferedReader().readText()
     }
 
-    fun getStreamPrimeNumbersResult(max: Long): String {
-        val args = "{\\\"max\\\": $max}"
+    fun getStreamPrimeNumbersResult(max: Long?): String {
+        val args = if (max != null) "{\\\"max\\\": $max}" else "{}"
         val proc = ProcessBuilder(curl, plainText, "-d", args, server, "calculator.PrimesService/StreamPrimeNumbers")
             .redirectOutput(ProcessBuilder.Redirect.PIPE)
             .redirectError(ProcessBuilder.Redirect.INHERIT)
@@ -56,8 +56,8 @@ class RequestHandler(private val server: String) {
         return proc.inputStream.bufferedReader().readText()
     }
 
-    fun getListPrimeNumbersResult(max: Long): String {
-        val args = "{\\\"max\\\": $max}"
+    fun getListPrimeNumbersResult(max: Long?): String {
+        val args = if (max != null) "{\\\"max\\\": $max}" else "{}"
         val proc = ProcessBuilder(curl, plainText, "-d", args, server, "calculator.PrimesService/ListPrimeNumbers")
             .redirectOutput(ProcessBuilder.Redirect.PIPE)
             .redirectError(ProcessBuilder.Redirect.INHERIT)

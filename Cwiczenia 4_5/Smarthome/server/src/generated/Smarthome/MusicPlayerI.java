@@ -19,7 +19,7 @@ public interface MusicPlayerI extends SpeakerI
 {
     Song getSong(com.zeroc.Ice.Current current);
 
-    void setSong(Song song, com.zeroc.Ice.Current current)
+    boolean setSong(Song song, com.zeroc.Ice.Current current)
         throws InvalidSongException;
 
     /** @hidden */
@@ -82,8 +82,11 @@ public interface MusicPlayerI extends SpeakerI
         Song iceP_song;
         iceP_song = Song.ice_read(istr);
         inS.endReadParams();
-        obj.setSong(iceP_song, current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.setSong(iceP_song, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /** @hidden */

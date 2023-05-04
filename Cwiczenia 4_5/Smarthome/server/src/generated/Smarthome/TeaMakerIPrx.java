@@ -17,18 +17,55 @@ package Smarthome;
 
 public interface TeaMakerIPrx extends BeverageMakerIPrx
 {
-    default void setTea(Tea tea)
-        throws InvalidTeaException
+    default Tea getCurrentTea()
     {
-        setTea(tea, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return getCurrentTea(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void setTea(Tea tea, java.util.Map<String, String> context)
+    default Tea getCurrentTea(java.util.Map<String, String> context)
+    {
+        return _iceI_getCurrentTeaAsync(context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<Tea> getCurrentTeaAsync()
+    {
+        return _iceI_getCurrentTeaAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<Tea> getCurrentTeaAsync(java.util.Map<String, String> context)
+    {
+        return _iceI_getCurrentTeaAsync(context, false);
+    }
+
+    /**
+     * @hidden
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<Tea> _iceI_getCurrentTeaAsync(java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<Tea> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "getCurrentTea", com.zeroc.Ice.OperationMode.Idempotent, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     Tea ret;
+                     ret = Tea.ice_read(istr);
+                     return ret;
+                 });
+        return f;
+    }
+
+    default boolean setTea(Tea tea)
+        throws InvalidTeaException
+    {
+        return setTea(tea, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default boolean setTea(Tea tea, java.util.Map<String, String> context)
         throws InvalidTeaException
     {
         try
         {
-            _iceI_setTeaAsync(tea, context, true).waitForResponseOrUserEx();
+            return _iceI_setTeaAsync(tea, context, true).waitForResponseOrUserEx();
         }
         catch(InvalidTeaException ex)
         {
@@ -40,12 +77,12 @@ public interface TeaMakerIPrx extends BeverageMakerIPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setTeaAsync(Tea tea)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setTeaAsync(Tea tea)
     {
         return _iceI_setTeaAsync(tea, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setTeaAsync(Tea tea, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setTeaAsync(Tea tea, java.util.Map<String, String> context)
     {
         return _iceI_setTeaAsync(tea, context, false);
     }
@@ -57,12 +94,16 @@ public interface TeaMakerIPrx extends BeverageMakerIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_setTeaAsync(Tea iceP_tea, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_setTeaAsync(Tea iceP_tea, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setTea", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setTea);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setTea", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setTea);
         f.invoke(true, context, null, ostr -> {
                      Tea.ice_write(ostr, iceP_tea);
-                 }, null);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

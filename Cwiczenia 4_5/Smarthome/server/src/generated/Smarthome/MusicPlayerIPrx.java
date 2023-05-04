@@ -54,18 +54,18 @@ public interface MusicPlayerIPrx extends SpeakerIPrx
         return f;
     }
 
-    default void setSong(Song song)
+    default boolean setSong(Song song)
         throws InvalidSongException
     {
-        setSong(song, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return setSong(song, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void setSong(Song song, java.util.Map<String, String> context)
+    default boolean setSong(Song song, java.util.Map<String, String> context)
         throws InvalidSongException
     {
         try
         {
-            _iceI_setSongAsync(song, context, true).waitForResponseOrUserEx();
+            return _iceI_setSongAsync(song, context, true).waitForResponseOrUserEx();
         }
         catch(InvalidSongException ex)
         {
@@ -77,12 +77,12 @@ public interface MusicPlayerIPrx extends SpeakerIPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setSongAsync(Song song)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setSongAsync(Song song)
     {
         return _iceI_setSongAsync(song, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setSongAsync(Song song, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setSongAsync(Song song, java.util.Map<String, String> context)
     {
         return _iceI_setSongAsync(song, context, false);
     }
@@ -94,12 +94,16 @@ public interface MusicPlayerIPrx extends SpeakerIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_setSongAsync(Song iceP_song, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_setSongAsync(Song iceP_song, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setSong", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setSong);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setSong", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setSong);
         f.invoke(true, context, null, ostr -> {
                      Song.ice_write(ostr, iceP_song);
-                 }, null);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

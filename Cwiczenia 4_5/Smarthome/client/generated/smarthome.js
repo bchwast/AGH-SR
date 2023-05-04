@@ -74,11 +74,11 @@
     Slice.defineOperations(Smarthome.DeviceI, Smarthome.DeviceIPrx, iceC_Smarthome_DeviceI_ids, 1,
     {
         "getState": [, 2, 2, , [1], , , , , ],
-        "turnOn": [, 2, 2, , , , ,
+        "turnOn": [, , , , [1], , ,
         [
             Smarthome.SmarthomeException
         ], , ],
-        "turnOff": [, 2, 2, , , , ,
+        "turnOff": [, , , , [1], , ,
         [
             Smarthome.SmarthomeException
         ], , ]
@@ -134,10 +134,10 @@
 
     Slice.defineOperations(Smarthome.SpeakerI, Smarthome.SpeakerIPrx, iceC_Smarthome_SpeakerI_ids, 2,
     {
-        "play": [, 2, 2, , , , , , , ],
-        "stop": [, 2, 2, , , , , , , ],
+        "play": [, 2, 2, , [1], , , , , ],
+        "stop": [, 2, 2, , [1], , , , , ],
         "getVolume": [, 2, 2, , [3], , , , , ],
-        "setVolume": [, 2, 2, , , [[3]], ,
+        "setVolume": [, 2, 2, , [1], [[3]], ,
         [
             Smarthome.InvalidVolumeException
         ], , ]
@@ -201,7 +201,7 @@
     Slice.defineOperations(Smarthome.RadioI, Smarthome.RadioIPrx, iceC_Smarthome_RadioI_ids, 2,
     {
         "getStation": [, 2, 2, , [Smarthome.RadioStation._helper], , , , , ],
-        "setStation": [, 2, 2, , , [[Smarthome.RadioStation._helper]], ,
+        "setStation": [, 2, 2, , [1], [[Smarthome.RadioStation._helper]], ,
         [
             Smarthome.InvalidRadioStationException
         ], , ],
@@ -288,7 +288,7 @@
     Slice.defineOperations(Smarthome.MusicPlayerI, Smarthome.MusicPlayerIPrx, iceC_Smarthome_MusicPlayerI_ids, 2,
     {
         "getSong": [, 2, 2, , [Smarthome.Song], , , , , ],
-        "setSong": [, 2, 2, , , [[Smarthome.Song]], ,
+        "setSong": [, 2, 2, , [1], [[Smarthome.Song]], ,
         [
             Smarthome.InvalidSongException
         ], , ]
@@ -461,7 +461,7 @@
     Slice.defineOperations(Smarthome.BeverageMakerI, Smarthome.BeverageMakerIPrx, iceC_Smarthome_BeverageMakerI_ids, 1,
     {
         "getWaterLevel": [, 2, 2, , [3], , , , , ],
-        "addWater": [, , , , , [[3]], ,
+        "addWater": [, , , , [1], [[3]], ,
         [
             Smarthome.WaterOverflowException
         ], , ]
@@ -551,7 +551,8 @@
 
     Slice.defineOperations(Smarthome.CoffeeMakerI, Smarthome.CoffeeMakerIPrx, iceC_Smarthome_CoffeeMakerI_ids, 2,
     {
-        "setCoffee": [, 2, 2, , , [[Smarthome.Coffee]], ,
+        "getCurrentCoffee": [, 2, 2, , [Smarthome.Coffee], , , , , ],
+        "setCoffee": [, 2, 2, , [1], [[Smarthome.Coffee]], ,
         [
             Smarthome.InvalidCoffeeException
         ], , ],
@@ -646,7 +647,8 @@
 
     Slice.defineOperations(Smarthome.TeaMakerI, Smarthome.TeaMakerIPrx, iceC_Smarthome_TeaMakerI_ids, 3,
     {
-        "setTea": [, 2, 2, , , [[Smarthome.Tea]], ,
+        "getCurrentTea": [, 2, 2, , [Smarthome.Tea], , , , , ],
+        "setTea": [, 2, 2, , [1], [[Smarthome.Tea]], ,
         [
             Smarthome.InvalidTeaException
         ], , ],

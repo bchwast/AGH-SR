@@ -54,18 +54,18 @@ public interface BeverageMakerIPrx extends DeviceIPrx
         return f;
     }
 
-    default void addWater(int amount)
+    default boolean addWater(int amount)
         throws WaterOverflowException
     {
-        addWater(amount, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return addWater(amount, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void addWater(int amount, java.util.Map<String, String> context)
+    default boolean addWater(int amount, java.util.Map<String, String> context)
         throws WaterOverflowException
     {
         try
         {
-            _iceI_addWaterAsync(amount, context, true).waitForResponseOrUserEx();
+            return _iceI_addWaterAsync(amount, context, true).waitForResponseOrUserEx();
         }
         catch(WaterOverflowException ex)
         {
@@ -77,12 +77,12 @@ public interface BeverageMakerIPrx extends DeviceIPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> addWaterAsync(int amount)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> addWaterAsync(int amount)
     {
         return _iceI_addWaterAsync(amount, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> addWaterAsync(int amount, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> addWaterAsync(int amount, java.util.Map<String, String> context)
     {
         return _iceI_addWaterAsync(amount, context, false);
     }
@@ -94,12 +94,16 @@ public interface BeverageMakerIPrx extends DeviceIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_addWaterAsync(int iceP_amount, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_addWaterAsync(int iceP_amount, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "addWater", null, sync, _iceE_addWater);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "addWater", null, sync, _iceE_addWater);
         f.invoke(true, context, null, ostr -> {
                      ostr.writeInt(iceP_amount);
-                 }, null);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

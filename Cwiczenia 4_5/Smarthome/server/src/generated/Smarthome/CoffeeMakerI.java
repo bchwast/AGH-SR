@@ -17,7 +17,9 @@ package Smarthome;
 
 public interface CoffeeMakerI extends BeverageMakerI
 {
-    void setCoffee(Coffee coffee, com.zeroc.Ice.Current current)
+    Coffee getCurrentCoffee(com.zeroc.Ice.Current current);
+
+    boolean setCoffee(Coffee coffee, com.zeroc.Ice.Current current)
         throws InvalidCoffeeException;
 
     Coffee makeCoffee(com.zeroc.Ice.Current current)
@@ -57,6 +59,24 @@ public interface CoffeeMakerI extends BeverageMakerI
      * @param inS -
      * @param current -
      * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_getCurrentCoffee(CoffeeMakerI obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(com.zeroc.Ice.OperationMode.Idempotent, current.mode);
+        inS.readEmptyParams();
+        Coffee ret = obj.getCurrentCoffee(current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        Coffee.ice_write(ostr, ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
      * @throws com.zeroc.Ice.UserException -
     **/
     static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_setCoffee(CoffeeMakerI obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
@@ -67,8 +87,11 @@ public interface CoffeeMakerI extends BeverageMakerI
         Coffee iceP_coffee;
         iceP_coffee = Coffee.ice_read(istr);
         inS.endReadParams();
-        obj.setCoffee(iceP_coffee, current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.setCoffee(iceP_coffee, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /**
@@ -114,6 +137,7 @@ public interface CoffeeMakerI extends BeverageMakerI
     {
         "addWater",
         "getCoffeeTypes",
+        "getCurrentCoffee",
         "getState",
         "getWaterLevel",
         "ice_id",
@@ -149,41 +173,45 @@ public interface CoffeeMakerI extends BeverageMakerI
             }
             case 2:
             {
-                return DeviceI._iceD_getState(this, in, current);
+                return _iceD_getCurrentCoffee(this, in, current);
             }
             case 3:
             {
-                return BeverageMakerI._iceD_getWaterLevel(this, in, current);
+                return DeviceI._iceD_getState(this, in, current);
             }
             case 4:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return BeverageMakerI._iceD_getWaterLevel(this, in, current);
             }
             case 5:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 6:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
             case 7:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
             }
             case 8:
             {
-                return _iceD_makeCoffee(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
             case 9:
             {
-                return _iceD_setCoffee(this, in, current);
+                return _iceD_makeCoffee(this, in, current);
             }
             case 10:
             {
-                return DeviceI._iceD_turnOff(this, in, current);
+                return _iceD_setCoffee(this, in, current);
             }
             case 11:
+            {
+                return DeviceI._iceD_turnOff(this, in, current);
+            }
+            case 12:
             {
                 return DeviceI._iceD_turnOn(this, in, current);
             }

@@ -17,22 +17,22 @@ package Smarthome;
 
 public interface SpeakerIPrx extends DeviceIPrx
 {
-    default void play()
+    default boolean play()
     {
-        play(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return play(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void play(java.util.Map<String, String> context)
+    default boolean play(java.util.Map<String, String> context)
     {
-        _iceI_playAsync(context, true).waitForResponse();
+        return _iceI_playAsync(context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> playAsync()
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> playAsync()
     {
         return _iceI_playAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> playAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> playAsync(java.util.Map<String, String> context)
     {
         return _iceI_playAsync(context, false);
     }
@@ -43,29 +43,33 @@ public interface SpeakerIPrx extends DeviceIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_playAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_playAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "play", com.zeroc.Ice.OperationMode.Idempotent, sync, null);
-        f.invoke(false, context, null, null, null);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "play", com.zeroc.Ice.OperationMode.Idempotent, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 
-    default void stop()
+    default boolean stop()
     {
-        stop(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return stop(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void stop(java.util.Map<String, String> context)
+    default boolean stop(java.util.Map<String, String> context)
     {
-        _iceI_stopAsync(context, true).waitForResponse();
+        return _iceI_stopAsync(context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> stopAsync()
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> stopAsync()
     {
         return _iceI_stopAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> stopAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> stopAsync(java.util.Map<String, String> context)
     {
         return _iceI_stopAsync(context, false);
     }
@@ -76,10 +80,14 @@ public interface SpeakerIPrx extends DeviceIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_stopAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_stopAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "stop", com.zeroc.Ice.OperationMode.Idempotent, sync, null);
-        f.invoke(false, context, null, null, null);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "stop", com.zeroc.Ice.OperationMode.Idempotent, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 
@@ -120,18 +128,18 @@ public interface SpeakerIPrx extends DeviceIPrx
         return f;
     }
 
-    default void setVolume(int volume)
+    default boolean setVolume(int volume)
         throws InvalidVolumeException
     {
-        setVolume(volume, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return setVolume(volume, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void setVolume(int volume, java.util.Map<String, String> context)
+    default boolean setVolume(int volume, java.util.Map<String, String> context)
         throws InvalidVolumeException
     {
         try
         {
-            _iceI_setVolumeAsync(volume, context, true).waitForResponseOrUserEx();
+            return _iceI_setVolumeAsync(volume, context, true).waitForResponseOrUserEx();
         }
         catch(InvalidVolumeException ex)
         {
@@ -143,12 +151,12 @@ public interface SpeakerIPrx extends DeviceIPrx
         }
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setVolumeAsync(int volume)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setVolumeAsync(int volume)
     {
         return _iceI_setVolumeAsync(volume, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> setVolumeAsync(int volume, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> setVolumeAsync(int volume, java.util.Map<String, String> context)
     {
         return _iceI_setVolumeAsync(volume, context, false);
     }
@@ -160,12 +168,16 @@ public interface SpeakerIPrx extends DeviceIPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_setVolumeAsync(int iceP_volume, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_setVolumeAsync(int iceP_volume, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setVolume", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setVolume);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "setVolume", com.zeroc.Ice.OperationMode.Idempotent, sync, _iceE_setVolume);
         f.invoke(true, context, null, ostr -> {
                      ostr.writeInt(iceP_volume);
-                 }, null);
+                 }, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
+                     return ret;
+                 });
         return f;
     }
 

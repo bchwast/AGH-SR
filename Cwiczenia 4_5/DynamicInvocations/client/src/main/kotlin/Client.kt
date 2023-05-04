@@ -23,33 +23,35 @@ fun matchCommand(command: String) {
         "getOperationResult" -> {
             println("Enter operation name (SUM, AVG, MULT, MIN, MAX): ")
             val operation = readlnOrNull()
-            if (!operations.contains(operation)) {
-                println("Unknown operation")
-                return
-            }
+//            if (!operations.contains(operation)) {
+//                println("Unknown operation")
+//                return
+//            }
             println("Enter numbers: ")
-            var numbers = readlnOrNull()?.split(" ")?.map { it.toLong() }
-            numbers = if (operation.equals("SUM") || operation.equals("MULT")) numbers
-            else numbers?.subList(0, 2)
+            val input = readlnOrNull()
+            val numbers = if (input!!.isNotEmpty()) input.split(" ").map { it.toLong() } else emptyList()
             println(requestHandler?.getOperationResult(operation!!, numbers!!))
         }
 
         "getPrimeTesterResult" -> {
             println("Enter number: ")
-            val number = readlnOrNull()?.toLong()
-            println(requestHandler?.getPrimeTesterResult(number!!))
+            val input = readlnOrNull()
+            val number = if (input!!.isNotEmpty()) input.toLong() else null
+            println(requestHandler?.getPrimeTesterResult(number))
         }
 
         "getStreamPrimeNumbersResult" -> {
             println("Enter max: ")
-            val max = readlnOrNull()?.toLong()
-            println(requestHandler?.getStreamPrimeNumbersResult(max!!))
+            val input = readlnOrNull()
+            val max = if (input!!.isNotEmpty()) input.toLong() else null
+            println(requestHandler?.getStreamPrimeNumbersResult(max))
         }
 
         "getListPrimeNumbersResult" -> {
             println("Enter max: ")
-            val max = readlnOrNull()?.toLong()
-            println(requestHandler?.getListPrimeNumbersResult(max!!))
+            val input = readlnOrNull()
+            val max = if (input!!.isNotEmpty()) input.toLong() else null
+            println(requestHandler?.getListPrimeNumbersResult(max))
         }
 
         else -> println("Unknown command")

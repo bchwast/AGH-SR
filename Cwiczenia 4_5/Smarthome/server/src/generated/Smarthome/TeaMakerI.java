@@ -17,7 +17,9 @@ package Smarthome;
 
 public interface TeaMakerI extends BeverageMakerI
 {
-    void setTea(Tea tea, com.zeroc.Ice.Current current)
+    Tea getCurrentTea(com.zeroc.Ice.Current current);
+
+    boolean setTea(Tea tea, com.zeroc.Ice.Current current)
         throws InvalidTeaException;
 
     Tea makeTea(com.zeroc.Ice.Current current)
@@ -57,6 +59,24 @@ public interface TeaMakerI extends BeverageMakerI
      * @param inS -
      * @param current -
      * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_getCurrentTea(TeaMakerI obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(com.zeroc.Ice.OperationMode.Idempotent, current.mode);
+        inS.readEmptyParams();
+        Tea ret = obj.getCurrentTea(current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        Tea.ice_write(ostr, ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
      * @throws com.zeroc.Ice.UserException -
     **/
     static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_setTea(TeaMakerI obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
@@ -67,8 +87,11 @@ public interface TeaMakerI extends BeverageMakerI
         Tea iceP_tea;
         iceP_tea = Tea.ice_read(istr);
         inS.endReadParams();
-        obj.setTea(iceP_tea, current);
-        return inS.setResult(inS.writeEmptyParams());
+        boolean ret = obj.setTea(iceP_tea, current);
+        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
+        ostr.writeBool(ret);
+        inS.endWriteParams(ostr);
+        return inS.setResult(ostr);
     }
 
     /**
@@ -113,6 +136,7 @@ public interface TeaMakerI extends BeverageMakerI
     final static String[] _iceOps =
     {
         "addWater",
+        "getCurrentTea",
         "getState",
         "getTeaTypes",
         "getWaterLevel",
@@ -145,45 +169,49 @@ public interface TeaMakerI extends BeverageMakerI
             }
             case 1:
             {
-                return DeviceI._iceD_getState(this, in, current);
+                return _iceD_getCurrentTea(this, in, current);
             }
             case 2:
             {
-                return _iceD_getTeaTypes(this, in, current);
+                return DeviceI._iceD_getState(this, in, current);
             }
             case 3:
             {
-                return BeverageMakerI._iceD_getWaterLevel(this, in, current);
+                return _iceD_getTeaTypes(this, in, current);
             }
             case 4:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return BeverageMakerI._iceD_getWaterLevel(this, in, current);
             }
             case 5:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 6:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
             case 7:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
             }
             case 8:
             {
-                return _iceD_makeTea(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
             case 9:
             {
-                return _iceD_setTea(this, in, current);
+                return _iceD_makeTea(this, in, current);
             }
             case 10:
             {
-                return DeviceI._iceD_turnOff(this, in, current);
+                return _iceD_setTea(this, in, current);
             }
             case 11:
+            {
+                return DeviceI._iceD_turnOff(this, in, current);
+            }
+            case 12:
             {
                 return DeviceI._iceD_turnOn(this, in, current);
             }
